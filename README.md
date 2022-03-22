@@ -12,7 +12,7 @@
 ## Clone o projeto
 
 ```sh
-git https://github.com/MaikeRds/javaee-meetapp.git
+git https://github.com/Gian-F/ejp.git
 ```
 
 ## Iniciar o projeto
@@ -24,5 +24,5 @@ Adicione o projeto ao servidor configurado e start a aplicação
 ## Rodar no Browser
 
 ```sh
-http://localhost:8080/meetapp/CadastrarEvento.xhtml
+http://localhost:8080/ejp/CadastrarCliente.xhtml
 ```
