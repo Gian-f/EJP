@@ -12,7 +12,7 @@
 ## Clone o projeto
 
 ```sh
-git https://github.com/Gian-F/ejp.git
+git https://github.com/Gian-f/ejp.git
 ```
 
 ## Iniciar o projeto
