@@ -1,0 +1,115 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+	<ui:define name="corpo">
+
+		<title>Cadastrar Cliente</title>
+		<p:breadCrumb>
+			<p:menuitem value="" url="#{contextPath}/index.xhtml" />
+			<p:menuitem value="Escola de Jovens Programadores" url="#" />
+			<p:menuitem value="Cadastro de Clientes" url="#" />
+		</p:breadCrumb>
+		<h:form id="form">
+
+			<p:tabView>
+				<p:tab title="Cadastrar Cliente">
+					<p:separator />
+					<h:panelGrid columns="4" cellpadding="10">
+						<p:outputLabel value="Nome: *" />
+						<p:inputText value="#{clienteBean.cliente.nome}" size="55"
+							placeholder="Ex: Gian Felipe da Silva" required="true"
+							requiredMessage="O nome é obrigatório" />
+
+						<p:outputLabel value="Código do Cliente: *" />
+						<p:inputText value="#{clienteBean.cliente.codigo}" size="19"
+							placeholder="Ex: 12345" required="true"
+							requiredMessage="O código é obrigatório" />
+
+						<p:outputLabel value="Telefone: *" />
+						<p:inputMask value="#{clienteBean.cliente.telefone}"
+							required="true" requiredMessage="O telefone é obrigatório"
+							mask="(99)99999-9999" placeholder="Ex: (21) 2616-0000 " size="55" />
+
+						<p:outputLabel value="Data:" />
+						<p:calendar value="#{clienteBean.cliente.data}" type="date" pattern="dd-MMM-yyyy" />
+
+						<p:outputLabel value="Em qual Loja o cliente comprou? *" />
+						<p:selectOneMenu filter="true">
+							<f:selectItem itemValue="" itemLabel="Loja-01" />
+							<f:selectItem itemValue="" itemLabel="Loja-02" />
+							<f:selectItem itemValue="" itemLabel="Loja-03" />
+							<f:selectItem itemValue="" itemLabel="Loja-04" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+
+		<h:form>
+
+			<p:panelGrid style="border:0px; margin-top:20px;">
+				<p:commandButton style="border:0px; margin-top:10px;"
+					update=":form, dataTable"
+					value="#{(clienteBean.cliente.id > 0) ? 'Atualizar' : 'Cadastrar' }"
+					action="#{clienteBean.salvar}" />
+				<p:commandButton rendered="#{(clienteBean.cliente.id > 0)}"
+					value="Limpar" action="#{clienteBean.limpar}" />
+			</p:panelGrid>
+		</h:form>
+
+
+		<h:panelGrid styleClass="center">
+			<p:dataTable value="#{clienteBean.clientes}" var="c" id="dataTable"
+				emptyMessage="Nenhum registro encontrado." paginator="true"
+				paginatorPosition="bottom">
+				<p:column headerText="Código" style="width:80px;" sortBy="#{c.nome}"
+					value="#{c.codigo}">
+				</p:column>
+
+				<p:column headerText="Nome do Cliente" filterBy="#{c.nome}"
+					sortBy="#{c.nome}" value="#{c.nome}"></p:column>
+
+				<p:column headerText="Telefone" filterBy="#{c.telefone}"
+					sortBy="#{c.telefone}" value="#{c.telefone}">
+				</p:column>
+
+				<p:column headerText="Data" filterBy="#{c.data}" sortBy="#{c.data}"
+					value="#{c.data}">
+				</p:column>
+
+				<p:column headerText="Horário" filterBy="#{c.horario}"
+					sortBy="#{c.nome}" value="#{c.horario}">
+				</p:column>
+
+				<p:column headerText="Ações" width="70" style="text-align: center;">
+					<h:form>
+						<p:commandButton id="todoMenu" type="button"
+							icon="fa fa-ellipsis-v White Fs20 " />
+
+						<p:menu overlay="true" trigger="todoMenu" my="left top"
+							at="left bottom">
+							<p:menuitem value="Editar" icon="fa fa-edit"
+								title="Editar registro" update=":form">
+								<f:setPropertyActionListener value="#{c}"
+									target="#{clienteBean.cliente}" />
+							</p:menuitem>
+							<p:menuitem value="Remover" icon="fa fa-trash" title="Remover"
+								action="#{clienteBean.excluir}"
+								update=":form, dataTable">
+								<p:confirm header="Confirmação"
+									message="Tem certeza que deseja remover?" icon="ui-icon-alert" />
+							</p:menuitem>
+						</p:menu>
+					</h:form>
+				</p:column>
+			</p:dataTable>
+		</h:panelGrid>
+
+	</ui:define>
+
+</ui:composition>
+
